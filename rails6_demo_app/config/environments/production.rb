@@ -90,4 +90,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  #Whitelist Docker Host
+  config.hosts << "rails6_demo_app"
+  config.hosts << "localhost"
 end

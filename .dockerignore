@@ -1,0 +1,5 @@
+.git
+.dockerignore
+.env
+rails6_demo_app/node_modules/
+rails6_demo_app/vendor/bundle/

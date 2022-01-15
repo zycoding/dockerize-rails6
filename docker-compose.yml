@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  postgres:
+      image: postgres:12.1
+      environment:
+        POSTGRES_USER: rails6_demo_app
+        POSTGRES_PASSWORD: test_db_password
+      ports: 
+        - '5432:5432'
+      volumes:
+        - rails6_demo_app-postgres:/var/lib/postgresql/data
+  rails6_demo_app:
+      build:
+        context: .
+        args:
+          USER_ID: "${USER_ID:-501}"
+          GROUP_ID: "${GROUP_ID:-20}"
+      command: bundle exec puma -C config/puma/development.rb
+      volumes:
+        - ./rails6_demo_app:/opt/app
+      links:
+        - postgres
+      ports:
+        - '3000:3000'
+      env_file:
+        - .env
+  nginx:
+      build:
+        context: .
+        dockerfile: Dockerfile.nginx
+      links:
+        - rails6_demo_app
+      ports:
+        - '8020:8020'
+volumes:
+  rails6_demo_app-postgres:

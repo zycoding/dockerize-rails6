@@ -1,0 +1,10 @@
+FROM nginx:latest
+COPY reverse-proxy.conf /etc/nginx/conf.d/reverse-proxy.conf
+
+ENV INSTALL_PATH /opt/app
+WORKDIR $INSTALL_PATH
+RUN mkdir log
+
+EXPOSE 8020
+STOPSIGNAL SIGTERM
+CMD ["nginx", "-g", "daemon off;"]
